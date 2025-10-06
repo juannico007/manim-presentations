@@ -252,7 +252,7 @@ class MinimalPresentation(Slide):
         edge_indices = [[0, 4], [1, 4], [2, 5], [4, 5], [5, 6], [3, 6]]
         labels = ["S1", "S2", "S3", "S4", "P1", "P2", "Root"]
         edge_labels = ["A→A", "A→A", "G→G", "A→G", "G→A", "A→A"]
-        self.draw_custom_tree(node_positions, node_indices, edge_indices, labels, edge_labels)
+        m = self.draw_custom_tree(node_positions, node_indices, edge_indices, labels, edge_labels)
         self.next_slide()
 
         # Equations
@@ -266,7 +266,9 @@ class MinimalPresentation(Slide):
 
         # Remove components
         self.next_slide()
-        self.play(FadeOut(VGroup(title), eq, ))
+        self.play(
+            *[FadeOut(mob)for mob in self.mobjects]
+        )
 
 
 
@@ -326,7 +328,7 @@ class MinimalPresentation(Slide):
                     self.add(background)
                     self.add(edge_label)
                     all_edge_labels.append(VGroup(background, edge_label))      
-
+            return VGroup(*nodes, *all_labels, *all_edge_labels)
 
     def create_nodes(self, node_positions):
         """Create nodes at specified positions."""
